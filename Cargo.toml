@@ -2,6 +2,9 @@
 name = "routechecker"
 version = "0.1.0"
 authors = ["Francis Begyn <francis.begyn@gmail.com>"]
+exclude = ["target/debug"]
+description = "Small tool to check if an ip lays on a route"
+license = "GPL-3.0-or-later"
 
 [dependencies]
 traceroute = "0.1.1"
