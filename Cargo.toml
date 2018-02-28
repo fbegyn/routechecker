@@ -1,0 +1,8 @@
+[package]
+name = "routechecker"
+version = "0.1.0"
+authors = ["Francis Begyn <francis.begyn@gmail.com>"]
+
+[dependencies]
+traceroute = "0.1.1"
+clap = "2.30.0"
