@@ -33,23 +33,23 @@ fn main() {
 }
 
 fn run(matches: ArgMatches) -> Result<(), String>{
-    let port: &str = matches.value_of("port").unwrap();
+    let port: &str = matches.value_of("port").expect("Could not read port");
 
-    let hop: &str = matches.value_of("hop").unwrap();
+    let hop: &str = matches.value_of("hop").expect("Could not read hop address");
     let hop_port = format!("{}:{}",hop,port);
 
-    let dst: &str = matches.value_of("destination").unwrap();
+    let dst: &str = matches.value_of("destination").expect("Could not read dst address");
     let ip = format!("{}:{}",dst,port);
 
-    let millis: u64 = matches.value_of("delay").unwrap().parse().unwrap();
+    let millis: u64 = matches.value_of("delay").unwrap().parse().expect("Could not read delay time");
 
     let hop_addr: std::net::SocketAddr = hop_port.parse().expect("Unable to parse SocketAddr from hop");
     let addr: &str = &ip;
     let mut ok = false;
     let five_seconds = time::Duration::from_millis(millis);
     loop {
-        for result_ip in traceroute::execute(addr).unwrap() {
-            let comp: traceroute::TraceHop = result_ip.unwrap();
+        for result_ip in traceroute::execute(addr).expect("Traceroute failed") {
+            let comp: traceroute::TraceHop = result_ip.expect("Result address not found");
             if comp.host == hop_addr {
                 ok = true;
             }
