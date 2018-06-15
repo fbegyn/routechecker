@@ -48,17 +48,22 @@ fn run(matches: ArgMatches) -> Result<(), String>{
     let mut ok = false;
     let five_seconds = time::Duration::from_millis(millis);
     loop {
+        println!("Printing the route:");
+        let mut i: u16 = 1;
         for result_ip in traceroute::execute(addr).expect("Traceroute failed") {
             let comp: traceroute::TraceHop = result_ip.expect("Result address not found");
+            println!("Hop {:?}: {:?}", i,comp.host);
             if comp.host == hop_addr {
                 ok = true;
             }
+            i += 1;
         }
         if ok {
             println!("Route is going through: {:?}", hop_addr);
         } else {
             println!("Wrong way!");
         }
+        println!();
         thread::sleep(five_seconds)
     }
 }
